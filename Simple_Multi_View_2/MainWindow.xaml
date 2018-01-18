@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Simple_Multi_View_2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+        xmlns:vm="clr-namespace:Simple_Multi_View_2.ViewModel"
+        xmlns:views="clr-namespace:Simple_Multi_View_2.Views">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical" Margin="5">
+            <Button Content="Add" Margin="0,0,0,5" Command="{Binding AddBtn}"/>
+            <Button Content="List" Command="{Binding ListBtn}"/>
+        </StackPanel>
+
+        <ContentControl Grid.Column="1" Content="{Binding CurrentVM}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type vm:AddVM}">
+                    <views:Add/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:ListVM}">
+                    <views:List/>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
     </Grid>
 </Window>
